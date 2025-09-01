@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: RalewayR;
+  src: url("./assets/fonts/Raleway-Regular.ttf");
+}
+@font-face {
+  font-family: RalewayL;
+  src: url("./assets/fonts/Raleway-Light.ttf");
+}
+@font-face {
+  font-family: RalewayM;
+  src: url("./assets/fonts/Raleway-Medium.ttf");
+}
+@font-face {
+  font-family: RalewaySb;
+  src: url("./assets/fonts/Raleway-SemiBold.ttf");
+}
+@font-face {
+  font-family: RalewayB;
+  src: url("./assets/fonts/Raleway-Bold.ttf");
+}
+
+@layer utilities {
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    height: 100%;
+    width: 150%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      left: -150%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+}
