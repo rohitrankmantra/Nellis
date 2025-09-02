@@ -33,7 +33,7 @@ const SpecialOffers = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get('http://localhost:5000/api/v1/special-offers')
+    axios.get('https://backend-nelis-website.onrender.com/api/v1/special-offers')
       .then((response) => {
         setSpecialOffers(response.data);
         setLoading(false);

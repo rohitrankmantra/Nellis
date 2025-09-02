@@ -42,7 +42,7 @@ const Contact = () => {
 
       // Make the API call to your backend endpoint
       const response = await axios.post(
-        "http://localhost:5000/api/v1/contact",
+        "https://backend-nelis-website.onrender.com/api/v1/contact",
         payload
       ); // Adjust API endpoint as needed
 

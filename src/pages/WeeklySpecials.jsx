@@ -22,7 +22,7 @@ const WeeklySpecials = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get('https://backend-nellis.onrender.com/api/v1/weekly-specials')
+    axios.get('https://backend-nelis-website.onrender.com/api/v1/weekly-specials')
       .then((response) => {
         setWeeklyData(response.data);
         setLoading(false);

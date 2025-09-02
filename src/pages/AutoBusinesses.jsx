@@ -47,7 +47,7 @@ const AutoBusinesses = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/api/v1/businesses")
+      .get("https://backend-nelis-website.onrender.com/api/v1/businesses")
       .then((response) => {
         setBusinesses(response.data);
         setLoading(false);

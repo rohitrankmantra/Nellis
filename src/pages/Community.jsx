@@ -3,7 +3,8 @@ import { Calendar, User, MessageCircle, ArrowRight, Tag, Star, TrendingUp, X } f
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1/';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://backend-nelis-website.onrender.com/api/v1/';
+
 
 const Community = () => {
   const [posts, setPosts] = useState([]);
