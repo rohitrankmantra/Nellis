@@ -5,20 +5,24 @@ import toast from 'react-hot-toast';
 
 const WeeklySpecials = () => {
 
+  // Helper function to force HTTPS URLs
+  const getHttpsUrl = (url) => {
+    if (!url) return '';
+    return url.replace(/^http:\/\//i, 'https://');
+  };
 
   //////////// --- get Weekly Specials Data --- //////////////
-
   const [WeeklyData, setWeeklyData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalVideoUrl, setModalVideoUrl] = useState(null);
   const videoRefs = useRef({});
+
   const handlePlay = (id) => {
     const video = videoRefs.current[id];
     if (video) {
       video.play();
     }
   };
-
 
   useEffect(() => {
     setLoading(true);
@@ -32,7 +36,6 @@ const WeeklySpecials = () => {
         toast.error(error?.message);
       });
   }, []);
-
 
   const handleShowPopUpVideo = (url) => {
     setModalVideoUrl(url);
@@ -53,91 +56,86 @@ const WeeklySpecials = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {
+          {loading ? (
+            [1, 2, 3, 4, 5, 6].map((index) => (
+              <div className="w-full p-4 border rounded-lg shadow animate-pulse bg-white" key={index}>
+                <div className="h-48 bg-gray-200 rounded w-full shimmer"></div>
+                <div className="mt-4 space-y-2">
+                  <div className="h-4 bg-gray-200 rounded w-3/4 shimmer"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2 shimmer"></div>
+                  <div className="h-4 bg-gray-200 rounded w-full shimmer"></div>
+                </div>
+              </div>
+            ))
+          ) : (
+            WeeklyData?.data?.map((special) => (
+              <div
+                key={special?._id}
+                className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+              >
+                <div className="relative overflow-hidden">
+                  <video
+                    ref={(el) => (videoRefs.current[special?._id] = el)}
+                    src={getHttpsUrl(special?.video)}
+                    className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
+                    muted
+                    playsInline
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-300" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button
+                      onClick={() => handleShowPopUpVideo(special?.video)}
+                      className="bg-red-600 hover:bg-red-700 text-white rounded-full p-6 transition-all duration-300 transform group-hover:scale-110 shadow-2xl"
+                    >
+                      <Play className="h-10 w-10" />
+                    </button>
+                  </div>
+                  <div className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    NEW
+                  </div>
+                </div>
 
-            loading ? (
-              <>
-                {
-                  [1, 2, 3, 4, 5, 6].map((index) => (
-                    <div className="w-full  p-4 border rounded-lg shadow animate-pulse bg-white" key={index}>
-                      <div className="h-48 bg-gray-200 rounded w-full shimmer"></div>
-                      <div className="mt-4 space-y-2">
-                        <div className="h-4 bg-gray-200 rounded w-3/4 shimmer"></div>
-                        <div className="h-4 bg-gray-200 rounded w-1/2 shimmer"></div>
-                        <div className="h-4 bg-gray-200 rounded w-full shimmer"></div>
-                      </div>
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                    {special?.title}
+                  </h3>
+                  <div className="flex items-center space-x-6 text-sm text-gray-600 mb-4">
+                    <div className="flex items-center">
+                      <MapPin className="h-4 w-4 mr-2 text-blue-600" />
+                      <span className="font-medium">{special?.dealership}</span>
                     </div>
-                  ))
-                }
-              </>
-            ) :
-              WeeklyData?.data?.map((special) => (
-                <div
-                  key={special?._id}
-                  className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-                >
-                  <div className="relative overflow-hidden">
-                    <video
-                      ref={(el) => (videoRefs.current[special?._id] = el)}
-                      src={special?.video}
-                      className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
-                      muted
-                      playsInline
-                    />
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <button
-                        onClick={() => handleShowPopUpVideo(special?.video)}
-                        className="bg-red-600 hover:bg-red-700 text-white rounded-full p-6 transition-all duration-300 transform group-hover:scale-110 shadow-2xl"
-                      >
-                        <Play className="h-10 w-10" />
-                      </button>
-                    </div>
-                    <div className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                      NEW
+                    <div className="flex items-center">
+                      <Calendar className="h-4 w-4 mr-2 text-blue-600" />
+                      <span>{new Date(special?.date).toLocaleDateString()}</span>
                     </div>
                   </div>
 
-                  <div className="p-8">
-                    <h3 className="text-2xl font-bold mb-4 text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                      {special?.title}
-                    </h3>
-                    <div className="flex items-center space-x-6 text-sm text-gray-600 mb-4">
-                      <div className="flex items-center">
-                        <MapPin className="h-4 w-4 mr-2 text-blue-600" />
-                        <span className="font-medium">{special?.dealership}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-2 text-blue-600" />
-                        <span>{new Date(special?.date).toLocaleDateString()}</span>
-                      </div>
-                    </div>
+                  <p className="text-gray-700 mb-6 leading-relaxed text-lg">
+                    {special.description}
+                  </p>
 
-                    <p className="text-gray-700 mb-6 leading-relaxed text-lg">
-                      {special.description}
-                    </p>
-
-                    <div className="flex items-center justify-between">
-                      <button
-                        onClick={() => handleShowPopUpVideo(special.video)}
-                        className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 font-semibold"
-                      >
-                        Watch Video
-                      </button>
-                      <div className="flex items-center text-yellow-500">
-                        <Star classNae="h-4 w-4 fill-current mr-1" />
-                        <span className="text-sm font-medium text-gray-600">
-                          Featured Deal
-                        </span>
-                      </div>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShowPopUpVideo(special.video)}
+                      className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 font-semibold"
+                    >
+                      Watch Video
+                    </button>
+                    <div className="flex items-center text-yellow-500">
+                      <Star className="h-4 w-4 fill-current mr-1" />
+                      <span className="text-sm font-medium text-gray-600">
+                        Featured Deal
+                      </span>
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
+            ))
+          )}
         </div>
 
         {/* Modal */}
-        {modalVideoUrl ? (
+        {modalVideoUrl && (
           <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl overflow-hidden max-w-3xl w-full relative shadow-2xl">
               <button
@@ -147,14 +145,14 @@ const WeeklySpecials = () => {
                 <X className="h-5 w-5" />
               </button>
               <video
-                src={modalVideoUrl}
+                src={getHttpsUrl(modalVideoUrl)}
                 className="w-full h-[400px] object-cover"
                 controls
                 autoPlay
               />
             </div>
           </div>
-        ) : null}
+        )}
 
         {/* Submit Video CTA */}
         <div className="mt-20 bg-gradient-to-r from-blue-900 via-slate-900 to-red-900 text-white rounded-3xl p-12 text-center">
