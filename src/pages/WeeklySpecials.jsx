@@ -102,7 +102,7 @@ const WeeklySpecials = () => {
                   <div className="flex items-center space-x-6 text-sm text-gray-600 mb-4">
                     <div className="flex items-center">
                       <MapPin className="h-4 w-4 mr-2 text-blue-600" />
-                      <span className="font-medium">{special?.dealership}</span>
+                      <span className="font-medium">{special?.dealership?.name}</span>
                     </div>
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-2 text-blue-600" />

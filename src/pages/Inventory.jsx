@@ -1,54 +1,91 @@
-import React, { useState, useMemo } from 'react';
-import { Search, Filter, Phone, Mail, Gauge, Calendar, Palette, Fuel, Star, MapPin } from 'lucide-react';
-import { mockCars, mockDealers } from '../data/mockData';
+"use client";
+
+import React, { useState, useMemo, useEffect } from "react";
+import axios from "axios";
+import { 
+  Search, Filter, Phone, Mail, Gauge, Calendar, Palette, Fuel, MapPin 
+} from "lucide-react";
+
+const API_BASE_URL = "https://backend-nelis-website.onrender.com/api/v1"; // your backend base URL
 
 const Inventory = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [inventory, setInventory] = useState([]);
+  const [dealers, setDealers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
-    make: '',
+    make: "",
     minPrice: 0,
     maxPrice: 100000,
     maxMileage: 100000,
     minYear: 2015,
-    dealership: ''
+    dealership: "",
   });
   const [showFilters, setShowFilters] = useState(false);
 
+  // Fetch vehicles from backend
+  const fetchInventory = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${API_BASE_URL}/vehicles`);
+      setInventory(res.data.data);
+
+      // Extract dealers from vehicles (populated)
+      const uniqueDealers = Array.from(
+        new Map(res.data.data.map(v => [v.dealership._id, v.dealership])).values()
+      );
+      setDealers(uniqueDealers);
+    } catch (err) {
+      console.error("Error fetching vehicles:", err);
+      alert("Failed to fetch inventory.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchInventory();
+  }, []);
+
+  const makes = [...new Set(inventory.map(car => car.brand))];
+
   const filteredCars = useMemo(() => {
-    return mockCars.filter(car => {
-      const matchesSearch = car.make.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           car.model.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesMake = !filters.make || car.make === filters.make;
+    return inventory.filter(car => {
+      const matchesSearch =
+        car.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        car.model.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesMake = !filters.make || car.brand === filters.make;
       const matchesPrice = car.price >= filters.minPrice && car.price <= filters.maxPrice;
       const matchesMileage = car.mileage <= filters.maxMileage;
       const matchesYear = car.year >= filters.minYear;
-      const matchesDealership = !filters.dealership || car.dealershipId === filters.dealership;
+      const matchesDealership =
+        !filters.dealership || car.dealership._id === filters.dealership;
 
-      return matchesSearch && matchesMake && matchesPrice && matchesMileage && matchesYear && matchesDealership;
+      return (
+        matchesSearch &&
+        matchesMake &&
+        matchesPrice &&
+        matchesMileage &&
+        matchesYear &&
+        matchesDealership
+      );
     });
-  }, [searchTerm, filters]);
-
-  const makes = [...new Set(mockCars.map(car => car.make))];
-
-  const getDealerInfo = (dealershipId) => {
-    return mockDealers.find(dealer => dealer.id === dealershipId);
-  };
+  }, [inventory, searchTerm, filters]);
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Hero */}
       <div className="bg-gradient-to-r from-blue-900 via-slate-900 to-red-900 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Vehicle Inventory</h1>
-            <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-              Browse quality pre-owned vehicles from trusted Nellis Boulevard dealers
-            </p>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">Vehicle Inventory</h1>
+          <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+            Browse quality pre-owned vehicles from trusted dealers
+          </p>
         </div>
       </div>
 
+      {/* Filters */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Search and Filter Bar */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-10">
           <div className="flex flex-col md:flex-row gap-6 items-center">
             <div className="relative flex-1">
@@ -58,7 +95,7 @@ const Inventory = () => {
                 placeholder="Search by make or model..."
                 className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={e => setSearchTerm(e.target.value)}
               />
             </div>
             <button
@@ -78,7 +115,7 @@ const Inventory = () => {
                   <select
                     className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     value={filters.make}
-                    onChange={(e) => setFilters({...filters, make: e.target.value})}
+                    onChange={e => setFilters({ ...filters, make: e.target.value })}
                   >
                     <option value="">All Makes</option>
                     {makes.map(make => (
@@ -92,7 +129,7 @@ const Inventory = () => {
                   <select
                     className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     value={filters.maxPrice}
-                    onChange={(e) => setFilters({...filters, maxPrice: parseInt(e.target.value)})}
+                    onChange={e => setFilters({ ...filters, maxPrice: parseInt(e.target.value) })}
                   >
                     <option value={100000}>Any Price</option>
                     <option value={10000}>Under $10,000</option>
@@ -108,7 +145,7 @@ const Inventory = () => {
                   <select
                     className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     value={filters.maxMileage}
-                    onChange={(e) => setFilters({...filters, maxMileage: parseInt(e.target.value)})}
+                    onChange={e => setFilters({ ...filters, maxMileage: parseInt(e.target.value) })}
                   >
                     <option value={100000}>Any Mileage</option>
                     <option value={10000}>Under 10,000 miles</option>
@@ -123,7 +160,7 @@ const Inventory = () => {
                   <select
                     className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     value={filters.minYear}
-                    onChange={(e) => setFilters({...filters, minYear: parseInt(e.target.value)})}
+                    onChange={e => setFilters({ ...filters, minYear: parseInt(e.target.value) })}
                   >
                     <option value={2015}>2015 or newer</option>
                     <option value={2018}>2018 or newer</option>
@@ -137,11 +174,11 @@ const Inventory = () => {
                   <select
                     className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     value={filters.dealership}
-                    onChange={(e) => setFilters({...filters, dealership: e.target.value})}
+                    onChange={e => setFilters({ ...filters, dealership: e.target.value })}
                   >
                     <option value="">All Dealerships</option>
-                    {mockDealers.map(dealer => (
-                      <option key={dealer.id} value={dealer.id}>{dealer.name}</option>
+                    {dealers.map(dealer => (
+                      <option key={dealer._id} value={dealer._id}>{dealer.name}</option>
                     ))}
                   </select>
                 </div>
@@ -153,30 +190,30 @@ const Inventory = () => {
         {/* Results */}
         <div className="mb-8">
           <p className="text-xl text-gray-600 font-medium">
-            Showing {filteredCars.length} of {mockCars.length} vehicles
+            {loading ? "Loading..." : `Showing ${filteredCars.length} of ${inventory.length} vehicles`}
           </p>
         </div>
 
         {/* Vehicle Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCars.map((car) => {
-            const dealer = getDealerInfo(car.dealershipId);
+          {filteredCars.map(car => {
+            const dealer = car.dealership;
             return (
-              <div key={car.id} className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+              <div key={car._id} className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
                 <div className="relative overflow-hidden">
                   <img 
-                    src={car.image} 
-                    alt={`${car.year} ${car.make} ${car.model}`}
+                    src={car.images[0] || ""} 
+                    alt={`${car.year} ${car.brand} ${car.model}`}
                     className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    Available
+                  <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-semibold ${car.status === "Available" ? "bg-green-600 text-white" : "bg-gray-400 text-white"}`}>
+                    {car.status}
                   </div>
                 </div>
                 
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-bold text-gray-900">{car.year} {car.make} {car.model}</h3>
+                    <h3 className="text-xl font-bold text-gray-900">{car.year} {car.brand} {car.model}</h3>
                     <span className="text-2xl font-bold text-green-600">${car.price.toLocaleString()}</span>
                   </div>
                   
@@ -191,11 +228,11 @@ const Inventory = () => {
                     </div>
                     <div className="flex items-center">
                       <Palette className="h-4 w-4 mr-2 text-blue-600" />
-                      {car.exteriorColor}
+                      {car.exteriorColor || "N/A"}
                     </div>
                     <div className="flex items-center">
                       <Fuel className="h-4 w-4 mr-2 text-blue-600" />
-                      {car.fuelType}
+                      {car.fuelType || "N/A"}
                     </div>
                   </div>
                   
@@ -224,7 +261,7 @@ const Inventory = () => {
           })}
         </div>
 
-        {filteredCars.length === 0 && (
+        {filteredCars.length === 0 && !loading && (
           <div className="text-center py-20">
             <div className="bg-white rounded-2xl shadow-lg p-12 max-w-md mx-auto">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">No vehicles found</h3>
