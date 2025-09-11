@@ -31,9 +31,14 @@ const Inventory = () => {
       setInventory(res.data.data);
 
       // Extract dealers from vehicles (populated)
-      const uniqueDealers = Array.from(
-        new Map(res.data.data.map(v => [v.dealership._id, v.dealership])).values()
-      );
+     const uniqueDealers = Array.from(
+  new Map(
+    res.data.data
+      .filter(v => v.dealership) // ✅ filter out null dealerships
+      .map(v => [v.dealership._id, v.dealership])
+  ).values()
+);
+setDealers(uniqueDealers)
       setDealers(uniqueDealers);
     } catch (err) {
       console.error("Error fetching vehicles:", err);
