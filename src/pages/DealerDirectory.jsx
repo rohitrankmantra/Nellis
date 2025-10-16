@@ -18,7 +18,7 @@ const DealerDirectory = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get('https://backend-nelis-website.onrender.com/api/v1/dealerships')
+    axios.get('https://backend-nelis-website.onrender.com/api/v1/dealerships?limit=9999')
       .then((response) => {
         setDealers(response.data?.data || []);
         setLoading(false);
