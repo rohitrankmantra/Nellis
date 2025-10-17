@@ -221,10 +221,24 @@ const DealerDirectory = () => {
                         {dealer?.email}
                       </a>
                     </div>
-                    <div className="flex items-center">
-                      <Clock className="h-5 w-5 text-blue-600 mr-3" />
-                      <span className="text-gray-700 font-medium">{dealer?.hours}</span>
-                    </div>
+               <div className="flex flex-col">
+  <span className="flex items-center mb-1">
+    <Clock className="h-5 w-5 text-blue-600 mr-3" />
+    <span className="text-gray-700 font-medium">Working Hours:</span>
+  </span>
+  {dealer?.hours && typeof dealer.hours === 'object' ? (
+    <div className="ml-8 text-gray-700 font-medium space-y-1">
+      {Object.entries(dealer.hours).map(([day, time]) => (
+        <p key={day}>
+          <span className="font-semibold">{day}:</span> {time}
+        </p>
+      ))}
+    </div>
+  ) : (
+    <span className="ml-8 text-gray-700 font-medium">{dealer?.hours}</span>
+  )}
+</div>
+
                   </div>
 
                   {dealer?.services?.length > 0 && (

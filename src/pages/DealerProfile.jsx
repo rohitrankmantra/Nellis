@@ -57,22 +57,23 @@ const DealerProfile = () => {
 
     const parts = str.split(",").map((p) => p.trim());
 
-    parts.forEach((part) => {
-      const [days, time] = part.split(":").map((s) => s.trim());
+ parts.forEach((part) => {
+  // split only on the first colon
+  const [days, time] = part.split(/:(.+)/).map((s) => s.trim()); 
+  if (days.includes("-")) {
+    const [start, end] = days.split("-").map((d) => d.trim());
+    const keys = Object.keys(dayMap);
+    const startIndex = keys.indexOf(start);
+    const endIndex = keys.indexOf(end);
 
-      if (days.includes("-")) {
-        const [start, end] = days.split("-").map((d) => d.trim());
-        const keys = Object.keys(dayMap);
-        const startIndex = keys.indexOf(start);
-        const endIndex = keys.indexOf(end);
+    for (let i = startIndex; i <= endIndex; i++) {
+      parsed[dayMap[keys[i]]] = time;
+    }
+  } else {
+    parsed[dayMap[days]] = time;
+  }
+});
 
-        for (let i = startIndex; i <= endIndex; i++) {
-          parsed[dayMap[keys[i]]] = time;
-        }
-      } else {
-        parsed[dayMap[days]] = time;
-      }
-    });
 
     return parsed;
   })();
@@ -263,15 +264,26 @@ const DealerProfile = () => {
                 </h3>
                 <div className="space-y-3">
                   <div className="bg-white rounded-xl shadow p-6">
-                    {Object.entries(parsedHours).map(([day, hours]) => (
-                      <div
-                        key={day}
-                        className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0"
-                      >
-                        <span className="font-semibold text-gray-900">{day}:</span>
-                        <span className="text-gray-600 font-medium">{hours}</span>
-                      </div>
-                    ))}
+                {dealer?.data?.hours ? (
+  // If backend sends full string like "7:30 AM to 5:50 PM"
+  typeof dealer.data.hours === 'string' && dealer.data.hours.includes('to') ? (
+    <p className="text-gray-600 font-medium text-lg">{dealer.data.hours}</p>
+  ) : (
+    // Otherwise display parsed object
+    Object.entries(parsedHours).map(([day, hours]) => (
+      <div
+        key={day}
+        className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0"
+      >
+        <span className="font-semibold text-gray-900">{day}:</span>
+        <span className="text-gray-600 font-medium">{hours}</span>
+      </div>
+    ))
+  )
+) : (
+  <p className="text-gray-500 font-medium">Working hours not available</p>
+)}
+
                   </div>
 
                 </div>
