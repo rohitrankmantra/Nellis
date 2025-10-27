@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Car } from 'lucide-react';
-import logo from "../assets/logo.png"
+import { Menu, X } from 'lucide-react';
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-
   const { pathname } = useLocation();
+  const [isSticky, setIsSticky] = useState(false);
 
+  // Scroll to top when route changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname]);
+
+  // Sticky navbar effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) setIsSticky(true);
+      else setIsSticky(false);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -27,14 +39,20 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-gradient-to-r font-ralewayM  from-slate-900 via-blue-900 to-red-900 text-white  z-50 shadow border-b border-blue-800/30">
-      <div className=" mx-auto px-4 sm:px-6 lg:px-8">
+    <nav
+      className={`font-ralewayM bg-gradient-to-r from-slate-900 via-blue-900 to-red-900 text-white shadow border-b border-blue-800/30 transition-all duration-300 ${
+        isSticky
+          ? 'fixed top-0 left-0 w-full z-[9998] backdrop-blur-md bg-opacity-95'
+          : 'relative'
+      }`}
+    >
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
+          {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center group">
               <div className="relative">
-                {/* <Car className="h-12 w-12 text-red-500 group-hover:text-red-400 transition-all duration-300 transform group-hover:scale-110" /> */}
-                <img src={logo} className='h-16 w-16'></img>
+                <img src={logo} alt="Logo" className="h-16 w-16" />
                 <div className="absolute -inset-1 bg-red-500/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </Link>
@@ -46,10 +64,11 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`px-4 py-2 text-center text-sm font-medium transition-all duration-300 rounded-lg hover:bg-white/10 hover:text-red-400 relative group ${location.pathname === item.href
-                  ? 'text-red-400 bg-white/10'
-                  : 'text-white'
-                  }`}
+                className={`px-4 py-2 text-center text-sm font-medium transition-all duration-300 rounded-lg hover:bg-white/10 hover:text-red-400 relative group ${
+                  location.pathname === item.href
+                    ? 'text-red-400 bg-white/10'
+                    : 'text-white'
+                }`}
               >
                 {item.name}
                 {location.pathname === item.href && (
@@ -59,7 +78,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -79,10 +98,11 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`block px-4 py-3 text-base font-medium transition-all duration-300 hover:text-red-400 hover:bg-white/10 rounded-lg ${location.pathname === item.href
-                  ? 'text-red-400 bg-white/10'
-                  : 'text-white'
-                  }`}
+                className={`block px-4 py-3 text-base font-medium transition-all duration-300 hover:text-red-400 hover:bg-white/10 rounded-lg ${
+                  location.pathname === item.href
+                    ? 'text-red-400 bg-white/10'
+                    : 'text-white'
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
