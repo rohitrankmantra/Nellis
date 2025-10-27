@@ -11,22 +11,24 @@
     />
 
     <style>
-      /* Temporary Google Translate UI before moving into header */
+      /* Google Translate Wrapper */
       #google_translate_element {
         position: fixed;
         top: 68px;
         right: 40px;
-        background: none;
+        background: rgba(14, 14, 14, 0.9);
         border-radius: 8px;
         padding: 6px 12px;
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
         z-index: 9999;
         font-family: 'Inter', sans-serif;
+        transition: all 0.3s ease-in-out;
       }
 
+      /* Dropdown styling */
       #google_translate_element select {
         background: transparent !important;
-        color: #ffd700 !important; 
+        color: #ffd700 !important;
         border: none !important;
         font-weight: 500;
         font-size: 14px;
@@ -43,7 +45,7 @@
         outline: none !important;
       }
 
-      /* Hide Google’s extra branding */
+      /* Hide Google branding */
       .goog-logo-link,
       .goog-te-gadget span,
       .goog-te-banner-frame,
@@ -62,6 +64,49 @@
       .skiptranslate iframe {
         display: none !important;
       }
+
+      /* 🌐 Responsive styles */
+      @media (max-width: 1024px) {
+        #google_translate_element {
+          top: 60px;
+          right: 20px;
+          padding: 5px 10px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        #google_translate_element {
+          top: auto;
+          bottom: 20px;
+          right: 20px;
+          background: rgba(0, 0, 0, 0.8);
+          padding: 8px 12px;
+          border-radius: 6px;
+        }
+
+        #google_translate_element select {
+          font-size: 15px;
+          padding: 6px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #google_translate_element {
+          width: auto;
+          left: 50%;
+          right: auto;
+          bottom: 15px;
+          transform: translateX(-50%);
+          text-align: center;
+          padding: 10px 14px;
+          border-radius: 10px;
+        }
+
+        #google_translate_element select {
+          font-size: 16px;
+          color: #ffd700 !important;
+        }
+      }
     </style>
   </head>
 
@@ -78,7 +123,7 @@
         new google.translate.TranslateElement(
           {
             pageLanguage: 'en',
-            includedLanguages: 'en,es', 
+            includedLanguages: 'en,es',
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
           },
           'google_translate_element'
