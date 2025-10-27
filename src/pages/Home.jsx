@@ -104,31 +104,30 @@ const Home = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-5xl font-bold text-red-400 mb-2">2,500+</div>
+              <div className="text-5xl font-bold text-red-400 mb-2">Thousands </div>
               <div className="text-blue-200">Happy Customers</div>
             </div>
             <div className="text-center">
-              <div className="text-5xl font-bold text-red-400 mb-2">150+</div>
+              <div className="text-5xl font-bold text-red-400 mb-2">Hundreds</div>
               <div className="text-blue-200">Vehicles Available</div>
             </div>
             <div className="text-center">
-              <div className="text-5xl font-bold text-red-400 mb-2">5</div>
+              <div className="text-5xl font-bold text-red-400 mb-2">20+</div>
               <div className="text-blue-200">Trusted Dealerships</div>
             </div>
             <div className="text-center">
-              <div className="text-5xl font-bold text-red-400 mb-2">20+</div>
+              <div className="text-5xl font-bold text-red-400 mb-2">25</div>
               <div className="text-blue-200">Years Experience</div>
             </div>
           </div>
         </div>
       </section>
-
       {/* Featured Dealerships */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
-              Featured Dealerships
+              Some on List
             </h2>
             <p className="text-xl text-gray-600">
               Trusted partners serving the Las Vegas community with excellence

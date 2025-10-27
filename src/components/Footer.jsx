@@ -60,14 +60,14 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-red-500 flex-shrink-0" />
-                <a href="tel:(702) 555-AUTO" className="text-gray-300 hover:text-red-400 transition-colors duration-300">
-                  (702) 555-AUTO
+                <a href="tel:702-809-6463" className="text-gray-300 hover:text-red-400 transition-colors duration-300">
+                  702-809-6463
                 </a>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-red-500 flex-shrink-0" />
-                <a href="mailto:info@nellisauto.com" className="text-gray-300 hover:text-red-400 transition-colors duration-300">
-                  info@nellisauto.com
+                <a href="mailto:denny@nellisboulevardautodealers.com" className="text-gray-300 hover:text-red-400 transition-colors duration-300">
+                   denny@nellisboulevardautodealers.com
                 </a>
               </div>
             </div>
