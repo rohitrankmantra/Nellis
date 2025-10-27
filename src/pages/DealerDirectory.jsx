@@ -198,7 +198,7 @@ const DealerDirectory = () => {
                           <Star key={i} className={`h-5 w-5 ${i < (dealer.rating || 0) ? 'fill-current' : ''}`} />
                         ))}
                       </div>
-                      <span className="ml-2 text-sm text-gray-600 font-medium">{dealer?.rating || 'N/A'}</span>
+                      {/* <span className="ml-2 text-sm text-gray-600 font-medium">{dealer?.rating || 'N/A'}</span> */}
                     </div>
                   </div>
 

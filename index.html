@@ -9,14 +9,62 @@
       name="description"
       content="Premier used car dealerships along Nellis Boulevard in Las Vegas. Find low-mileage vehicles, financing, service, and parts from Craig to Russell Road."
     />
+
     <style>
+      /* Temporary Google Translate UI before moving into header */
       #google_translate_element {
-        position: relative;
+        position: fixed;
+        top: 68px;
+        right: 40px;
+        background: none;
+        border-radius: 8px;
+        padding: 6px 12px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
         z-index: 9999;
-        margin: 10px;
+        font-family: 'Inter', sans-serif;
+      }
+
+      #google_translate_element select {
+        background: transparent !important;
+        color: #ffd700 !important; 
+        border: none !important;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+      }
+
+      #google_translate_element select option {
+        background: #1c1c1c !important;
+        color: #ffd700 !important;
+      }
+
+      #google_translate_element select:focus {
+        outline: none !important;
+      }
+
+      /* Hide Google’s extra branding */
+      .goog-logo-link,
+      .goog-te-gadget span,
+      .goog-te-banner-frame,
+      #goog-gt-tt {
+        display: none !important;
+      }
+
+      .goog-te-gadget {
+        color: white !important;
+      }
+
+      body {
+        top: 0 !important;
+      }
+
+      .skiptranslate iframe {
+        display: none !important;
       }
     </style>
   </head>
+
   <body>
     <!-- Google Translate dropdown -->
     <div id="google_translate_element"></div>
@@ -30,19 +78,20 @@
         new google.translate.TranslateElement(
           {
             pageLanguage: 'en',
-            includedLanguages: 'es,en',
+            includedLanguages: 'en,es', 
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
           },
           'google_translate_element'
         );
       }
     </script>
+
     <script
       type="text/javascript"
       src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
     ></script>
 
-    <!-- Your app -->
+    <!-- Your React App -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
