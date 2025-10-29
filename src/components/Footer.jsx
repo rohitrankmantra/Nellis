@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Car, MapPin, Phone, Mail, Facebook, Twitter, Instagram } from 'lucide-react';
-import logo from "../assets/logo.png"
+import logo from "../assets/nelis-logo.png"
 const Footer = () => {
   return (
     <footer className="bg-gradient-to-r from-slate-900 via-gray-900 to-slate-900 text-white">
@@ -12,8 +12,8 @@ const Footer = () => {
             <div className="flex items-center space-x-3 mb-6">
               <div className="relative">
                 {/* <Car className="h-10 w-10 text-red-500" /> */}
-                <img src={logo} className='w-20 h-20'></img>
-                <div className="absolute -inset-1 bg-red-500/10 rounded-full blur"></div>
+                <img src={logo} className=' h-20 w-32 ml-['></img>
+                <div className="absolute -inset-1  rounded-full blur"></div>
               </div>
               <span className="font-bold text-2xl bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 Nellis Blvd Auto Dealers

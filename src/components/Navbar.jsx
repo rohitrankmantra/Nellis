@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import logo from "../assets/logo.png";
+import logo from "../assets/nelis-logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,8 +52,8 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center group">
               <div className="relative">
-                <img src={logo} alt="Logo" className="h-16 w-16" />
-                <div className="absolute -inset-1 bg-red-500/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <img src={logo} alt="Logo" className="h-20 w-32 " />
+                <div className="absolute -inset-1  rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </Link>
           </div>
