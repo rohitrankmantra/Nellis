@@ -13,10 +13,10 @@ import {
   Check,
 } from "lucide-react";
 import { LifeBuoy, BatteryCharging, Lightbulb } from "lucide-react";
-import axios from "axios";
+import axiosInstance from '../lib/axiosInstance';
+
 import toast from "react-hot-toast";
 
-const API_BASE_URL = "https://backend-nelis-website.onrender.com/api/v1/";
 const ServiceParts = () => {
   const [activeTab, setActiveTab] = useState("service");
   const [formData, setFormData] = useState({
@@ -155,10 +155,8 @@ const ServiceParts = () => {
         preferredDate: new Date(formData.preferredDate).toISOString(),
       };
 
-      const response = await axios.post(
-        `${API_BASE_URL}services`,
-        submissionData
-      );
+ const response = await axiosInstance.post("services", submissionData);
+
 
       if (response.status === 201) {
         toast.success("Appointment scheduled successfully!");

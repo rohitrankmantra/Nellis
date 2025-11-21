@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MapPin, Phone, Globe, Filter, Star, Award } from "lucide-react";
 import { mockBusinesses } from "../data/mockData";
-import axios from "axios";
+import axiosInstance from "../lib/axiosInstance";
 import toast from "react-hot-toast";
 
 const AutoBusinesses = () => {
@@ -46,16 +46,17 @@ const AutoBusinesses = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get("https://backend-nelis-website.onrender.com/api/v1/businesses")
-      .then((response) => {
-        setBusinesses(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        toast.error(error?.message);
-      });
+axiosInstance
+  .get("/businesses")
+  .then((response) => {
+    setBusinesses(response.data);
+    setLoading(false);
+  })
+  .catch((error) => {
+    setLoading(false);
+    toast.error(error?.message);
+  });
+;
   }, []);
 
   /////////// filter data //////////////

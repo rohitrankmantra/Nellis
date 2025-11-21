@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Play, Calendar, MapPin, Star, ArrowRight, X } from 'lucide-react';
-import axios from 'axios';
+import axiosInstance from '../lib/axiosInstance';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const WeeklySpecials = () => {
 
@@ -24,18 +25,21 @@ const WeeklySpecials = () => {
     }
   };
 
-  useEffect(() => {
+useEffect(() => {
+  const fetchWeeklySpecials = async () => {
     setLoading(true);
-    axios.get('https://backend-nelis-website.onrender.com/api/v1/weekly-specials')
-      .then((response) => {
-        setWeeklyData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        toast.error(error?.message);
-      });
-  }, []);
+    try {
+      const response = await axiosInstance.get('weekly-specials'); // relative path
+      setWeeklyData(response.data);
+    } catch (error) {
+      toast.error(error.message); // already formatted by axiosInstance
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchWeeklySpecials();
+}, []);
 
   const handleShowPopUpVideo = (url) => {
     setModalVideoUrl(url);
@@ -50,6 +54,12 @@ const WeeklySpecials = () => {
             <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
               Watch the latest video deals from our dealership partners and discover incredible savings
             </p>
+         <a
+    href="/dealer-directory"
+    className="inline-block mt-4 md:mt-8 bg-tranparent border-2 border-white hover:bg-white hover:text-[#1c3681]  px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl"
+  >
+    View All Dealerships
+  </a>
           </div>
         </div>
       </div>
@@ -165,9 +175,9 @@ const WeeklySpecials = () => {
             <button className="bg-white text-blue-900 hover:bg-gray-100 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
               Submit Your Video
             </button>
-            <button className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
+            <Link to={'/dealer-directory'} className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
               Learn More
-            </button>
+            </Link>
           </div>
         </div>
 

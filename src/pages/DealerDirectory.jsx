@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock, Star, ArrowRight, Award, Shield, Search, Filter } from 'lucide-react';
-import axios from 'axios';
+import axiosInstance from '../lib/axiosInstance';
+
 import toast from 'react-hot-toast';
 
 const DealerDirectory = () => {
@@ -18,15 +19,16 @@ const DealerDirectory = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get('https://backend-nelis-website.onrender.com/api/v1/dealerships?limit=9999')
-      .then((response) => {
-        setDealers(response.data?.data || []);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        toast.error(error?.message);
-      });
+    axiosInstance.get('/dealerships?limit=9999')
+  .then((response) => {
+    setDealers(response.data?.data || []);
+    setLoading(false);
+  })
+  .catch((error) => {
+    setLoading(false);
+    toast.error(error?.response?.data?.message || error.message);
+  });
+
   }, []);
 
   // collect dynamic filter values

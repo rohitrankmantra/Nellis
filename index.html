@@ -14,15 +14,16 @@
       /* Google Translate Wrapper */
       #google_translate_element {
         position: fixed;
-        top: 68px;
-        right: 40px;
-        background: rgba(14, 14, 14, 0.9);
-        border-radius: 8px;
-        padding: 6px 12px;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+        right: 30px;
+        bottom: 10%;
+        background: white;
+        border-radius: 50%;
+        padding: 12px 16px;
         z-index: 9999;
         font-family: 'Inter', sans-serif;
         transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     
       }
 
       /* Dropdown styling */
@@ -68,9 +69,12 @@
       /* 🌐 Responsive styles */
       @media (max-width: 1024px) {
         #google_translate_element {
-          top: 60px;
+       top: auto;
+          bottom: 20px;
           right: 20px;
-          padding: 5px 10px;
+          background: white;
+          border-radius: 50%;
+       
         }
       }
 
@@ -79,9 +83,8 @@
           top: auto;
           bottom: 20px;
           right: 20px;
-          background: rgba(0, 0, 0, 0.8);
-          padding: 8px 12px;
-          border-radius: 6px;
+          background: white;
+          border-radius: 50%;
         }
 
         #google_translate_element select {
@@ -93,19 +96,24 @@
       @media (max-width: 480px) {
         #google_translate_element {
           width: auto;
-          left: 50%;
-          right: auto;
-          bottom: 15px;
+          right: 1%;
+          bottom: 30px;
           transform: translateX(-50%);
           text-align: center;
           padding: 10px 14px;
-          border-radius: 10px;
+          border-radius: 50%;
         }
 
         #google_translate_element select {
           font-size: 16px;
           color: #ffd700 !important;
         }
+      }
+      
+      /* goggle icon iamge div  */
+      .goog-te-gadget-simple {
+        background: none !important;
+        border: none !important;
       }
     </style>
   </head>

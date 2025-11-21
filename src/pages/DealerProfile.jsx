@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock, Star, Car, ArrowLeft, Globe, Award, Shield, CheckCircle } from 'lucide-react';
 import { mockDealers, mockCars } from '../data/mockData';
-import axios from 'axios';
+import axiosInstance from '../lib/axiosInstance';
+
 
 const DealerProfile = () => {
   const { id } = useParams();
@@ -10,13 +11,14 @@ const DealerProfile = () => {
 
 
   useEffect(() => {
-    axios.get(`https://backend-nelis-website.onrender.com/api/v1/dealerships/${id}`)
-      .then((response) => {
-        setDealer(response.data);
-      })
-      .catch((error) => {
-        toast.error(error?.message);
-      });
+ axiosInstance.get(`/dealerships/${id}`)
+  .then((response) => {
+    setDealer(response.data);
+  })
+  .catch((error) => {
+    toast.error(error?.response?.data?.message || error.message);
+  });
+
   }, [])
 
 

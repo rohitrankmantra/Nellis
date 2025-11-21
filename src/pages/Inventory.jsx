@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from '../lib/axiosInstance';
 import { 
   Search, Filter, Phone, Mail, Gauge, Calendar, Palette, Fuel, MapPin 
 } from "lucide-react";
 
-const API_BASE_URL = "https://backend-nelis-website.onrender.com/api/v1"; // your backend base URL
 
 const Inventory = () => {
   const [inventory, setInventory] = useState([]);
@@ -27,7 +26,8 @@ const Inventory = () => {
   const fetchInventory = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_BASE_URL}/vehicles`);
+      const res = await axiosInstance.get("/vehicles");
+
       setInventory(res.data.data);
 
       // Extract dealers from vehicles (populated)

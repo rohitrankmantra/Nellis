@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Tag, Clock, Star, ArrowRight, Gift, Percent, DollarSign } from 'lucide-react';
-import axios from 'axios';
+import axiosInstance from '../lib/axiosInstance';
 import toast from 'react-hot-toast';
 import { data } from 'autoprefixer';
 
@@ -31,18 +31,21 @@ const SpecialOffers = () => {
   const [specialOffers, setSpecialOffers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+ useEffect(() => {
+  const fetchSpecialOffers = async () => {
     setLoading(true);
-    axios.get('https://backend-nelis-website.onrender.com/api/v1/special-offers')
-      .then((response) => {
-        setSpecialOffers(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        toast.error(error?.message);
-        setLoading(false);
-      });
-  }, []);
+    try {
+      const response = await axiosInstance.get('special-offers'); // relative path only
+      setSpecialOffers(response.data);
+    } catch (error) {
+      toast.error(error.message); // already formatted by axiosInstance
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchSpecialOffers();
+}, []);
 
 
   return (

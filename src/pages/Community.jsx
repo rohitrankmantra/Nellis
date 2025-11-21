@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Calendar, User, MessageCircle, ArrowRight, Tag, Star, TrendingUp, X } from 'lucide-react';
-import axios from 'axios';
+import axiosInstance from '../lib/axiosInstance';
 import toast from 'react-hot-toast';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://backend-nelis-website.onrender.com/api/v1/';
@@ -49,13 +49,9 @@ const Community = () => {
       setError(null);
       try {
         console.log('Fetching posts from:', `${API_BASE_URL}posts`);
-        const response = await axios.get(`${API_BASE_URL}posts`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          timeout: 10000,
-        });
-        console.log('API response:', response.data);
+       const response = await axiosInstance.get('/posts');
+
+        // console.log('API response:', response.data);
 
         if (!response.data || !Array.isArray(response.data.data)) {
           throw new Error('Invalid response format: Expected an array in response.data.data');
@@ -112,13 +108,9 @@ const Community = () => {
     setModalLoading(true);
     try {
       console.log('Fetching post details from:', `${API_BASE_URL}posts/${id}`);
-      const response = await axios.get(`${API_BASE_URL}posts/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        timeout: 10000,
-      });
-      console.log('Post details response:', response.data);
+  const response = await axiosInstance.get(`/posts/${id}`);
+
+      // console.log('Post details response:', response.data);
 
       if (!response.data || !response.data.data) {
         throw new Error('Invalid post details response');
