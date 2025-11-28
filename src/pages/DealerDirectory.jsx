@@ -312,7 +312,7 @@ const DealerDirectory = () => {
           )}
         </div>
 
-        {/* Map Section */}
+        {/* Map Section
         <div className="mt-20 bg-white rounded-2xl shadow-lg p-12">
           <h2 className="text-4xl font-bold text-center mb-8 text-gray-900">Nellis Boulevard Auto Corridor</h2>
           <div className="bg-gradient-to-br from-blue-50 to-green-50 h-80 rounded-2xl flex items-center justify-center border-2 border-blue-200">
@@ -332,7 +332,20 @@ const DealerDirectory = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+
+        <div className="rounded-2xl mt-12 overflow-hidden border-2 border-blue-200 shadow-lg">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3219.8521107651204!2d-115.06205812438387!3d36.19447837242602!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c8dcee09405cdf%3A0x6672f507daf67881!2s1892%20Ringe%20Ln%2C%20Las%20Vegas%2C%20NV%2089156%2C%20USA!5e0!3m2!1sen!2sin!4v1764307087965!5m2!1sen!2sin"
+    width="100%"
+    height="400"
+    style={{ border: 0 }}
+    allowFullScreen=""
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+  ></iframe>
+</div>
+
 
         {/* CTA Section */}
         <div className="mt-20 bg-gradient-to-r from-blue-900 via-slate-900 to-green-900 text-white rounded-3xl p-12">

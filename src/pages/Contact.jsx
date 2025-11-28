@@ -372,7 +372,7 @@ const Contact = () => {
             </div>
 
             {/* Map */}
-            <div className="bg-white rounded-2xl shadow-lg p-10">
+            {/* <div className="bg-white rounded-2xl shadow-lg p-10">
               <h2 className="text-3xl font-bold mb-8 text-gray-900">
                 Our Location
               </h2>
@@ -394,7 +394,20 @@ const Contact = () => {
                 Centrally located to serve all Nellis Boulevard dealerships and
                 the surrounding Las Vegas community
               </p>
-            </div>
+            </div> */}
+
+            <div className="rounded-2xl overflow-hidden mb-6 border-2 border-blue-200 shadow-lg">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3219.8521107651204!2d-115.06205812438387!3d36.19447837242602!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c8dcee09405cdf%3A0x6672f507daf67881!2s1892%20Ringe%20Ln%2C%20Las%20Vegas%2C%20NV%2089156%2C%20USA!5e0!3m2!1sen!2sin!4v1764307087965!5m2!1sen!2sin"
+    width="100%"
+    height="250"
+    style={{ border: 0 }}
+    allowFullScreen=""
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+  ></iframe>
+</div>
+
 
             {/* Quick Links */}
             <div className="bg-white rounded-2xl shadow-lg p-10">
