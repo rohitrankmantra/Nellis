@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json",
   },
-  timeout: 10000, // 10 seconds
+  // timeout: 10000, // 10 seconds
 });
 
 // OPTIONAL: Attach auth token if needed later
