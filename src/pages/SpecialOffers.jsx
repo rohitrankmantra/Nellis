@@ -129,10 +129,10 @@ const SpecialOffers = () => {
                     <strong className="text-gray-700">Terms:</strong> {offer?.termsConditions}
                   </div>
 
-                  <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 px-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center shadow-lg hover:shadow-xl">
+                  {/* <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 px-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center shadow-lg hover:shadow-xl">
                     Claim This Offer
                     <ArrowRight className="ml-2 h-5 w-5" />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             ))

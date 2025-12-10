@@ -123,8 +123,8 @@ useEffect(() => {
                   <p className="text-gray-700 mb-6 leading-relaxed text-lg">
                     {special.description}
                   </p>
-
-                  <div className="flex items-center justify-between">
+{/* 
+                <div className="flex items-center justify-between">
                     <button
                       onClick={() => handleShowPopUpVideo(special.video)}
                       className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 font-semibold"
@@ -137,7 +137,7 @@ useEffect(() => {
                         Featured Deal
                       </span>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))
@@ -172,9 +172,9 @@ useEffect(() => {
             Reach thousands of potential customers across Las Vegas and showcase your best deals.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <button className="bg-white text-blue-900 hover:bg-gray-100 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
-              Submit Your Video
-            </button>
+            <Link to={'/inventory'} className="bg-white text-blue-900 hover:bg-gray-100 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+              Visit Inventory
+            </Link>
             <Link to={'/dealer-directory'} className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
               Learn More
             </Link>

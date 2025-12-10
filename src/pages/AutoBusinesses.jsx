@@ -273,7 +273,7 @@ axiosInstance
         </div>
 
         {/* Add Business CTA */}
-        <div className="mt-20 bg-gradient-to-r from-blue-900 via-slate-900 to-purple-900 text-white rounded-3xl p-12">
+        {/* <div className="mt-20 bg-gradient-to-r from-blue-900 via-slate-900 to-purple-900 text-white rounded-3xl p-12">
           <div className="text-center">
             <Award className="h-16 w-16 text-yellow-400 mx-auto mb-6" />
             <h2 className="text-4xl font-bold mb-6">Own an Auto Business?</h2>
@@ -291,7 +291,7 @@ axiosInstance
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
